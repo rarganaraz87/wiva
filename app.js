@@ -1,138 +1,100 @@
-let artistsData = [];
-let tempArtworks = [];
+let artworks = [];
+let requests = [];
 
-function show(page){
+function show(page) {
   document.querySelectorAll(".page").forEach(p => p.classList.add("hidden"));
   document.getElementById(page).classList.remove("hidden");
-
-  renderRequests();
-  renderDashboard();
 }
 
-function togglePrice(){
+function togglePrice() {
   const sale = document.getElementById("sale").value;
-  const price = document.getElementById("price");
-  const label = document.getElementById("priceLabel");
+  document.getElementById("price").style.display = sale === "Yes" ? "block" : "none";
+}
 
-  if(sale === "Yes"){
-    price.style.display = "block";
-    label.style.display = "block";
+function toggleOtherCategory() {
+  const category = document.getElementById("category").value;
+  const other = document.getElementById("otherCategory");
+
+  if (category === "Other") {
+    other.classList.remove("hidden");
   } else {
-    price.style.display = "none";
-    label.style.display = "none";
-    price.value = "";
+    other.classList.add("hidden");
+    other.value = "";
   }
 }
-togglePrice();
 
-function addArtwork(){
+function addArtwork() {
+  const title = document.getElementById("title").value;
+  const medium = document.getElementById("medium").value;
+  const category = document.getElementById("category").value;
+  const otherCategory = document.getElementById("otherCategory").value;
+  const sale = document.getElementById("sale").value;
+  const price = document.getElementById("price").value;
 
-  const art = {
-    title: document.getElementById("title").value,
-    desc: document.getElementById("desc").value,
-    sale: document.getElementById("sale").value,
-    price: document.getElementById("sale").value === "Yes"
-      ? document.getElementById("price").value
-      : null
-  };
+  const finalCategory = category === "Other" ? otherCategory : category;
 
-  tempArtworks.push(art);
-  clearForm();
-  renderTempTable();
+  const art = { title, medium, category: finalCategory, sale, price };
+  artworks.push(art);
+
+  const row = `<tr>
+    <td>${title}</td>
+    <td>${medium}</td>
+    <td>${finalCategory}</td>
+    <td>${sale}</td>
+    <td>${price}</td>
+  </tr>`;
+
+  document.getElementById("tempTable").innerHTML += row;
 }
 
-function clearForm(){
-  document.getElementById("title").value = "";
-  document.getElementById("desc").value = "";
-  document.getElementById("price").value = "";
-  document.getElementById("sale").value = "No";
-  togglePrice();
-}
+function saveArtist() {
+  const artist = document.getElementById("artistName").value;
 
-function renderTempTable(){
-  const body = document.getElementById("tempTable");
-  body.innerHTML = "";
-
-  tempArtworks.forEach(a => {
-    body.innerHTML += `
-      <tr>
-        <td>${a.title}</td>
-        <td>${a.desc}</td>
-        <td>${a.sale}</td>
-        <td>${a.sale === "Yes" ? "£"+a.price : "-"}</td>
-      </tr>
-    `;
+  artworks.forEach(a => {
+    requests.push({ artist, ...a });
   });
-}
 
-function saveArtist(){
-
-  const artist = {
-    name: document.getElementById("artistName").value,
-    works: tempArtworks
-  };
-
-  artistsData.push(artist);
-
-  tempArtworks = [];
-  document.getElementById("artistName").value = "";
-
-  renderTempTable();
   renderRequests();
-  renderDashboard();
+  updateDashboard();
+  artworks = [];
+  document.getElementById("tempTable").innerHTML = "";
 }
 
-function renderRequests(){
-
-  const body = document.getElementById("requestTable");
-  body.innerHTML = "";
-
-  artistsData.forEach(a => {
-    a.works.forEach(w => {
-      body.innerHTML += `
-        <tr>
-          <td>${a.name}</td>
-          <td>${w.title}</td>
-          <td>${w.desc}</td>
-          <td>${w.sale}</td>
-          <td>${w.sale === "Yes" ? "£"+w.price : "-"}</td>
-        </tr>
-      `;
-    });
+function renderRequests() {
+  let html = "";
+  requests.forEach(r => {
+    html += `<tr>
+      <td>${r.artist}</td>
+      <td>${r.title}</td>
+      <td>${r.medium}</td>
+      <td>${r.category}</td>
+      <td>${r.sale}</td>
+      <td>${r.price}</td>
+    </tr>`;
   });
+  document.getElementById("requestTable").innerHTML = html;
 }
 
-function renderDashboard(){
+function updateDashboard() {
+  document.getElementById("totalArtists").innerText =
+    new Set(requests.map(r => r.artist)).size;
 
-  let artists = artistsData.length;
-  let artworks = 0;
-  let sale = 0;
+  document.getElementById("totalArtworks").innerText = requests.length;
 
-  artistsData.forEach(a => {
-    artworks += a.works.length;
-    sale += a.works.filter(w => w.sale === "Yes").length;
-  });
-
-  document.getElementById("totalArtists").innerText = artists;
-  document.getElementById("totalArtworks").innerText = artworks;
-  document.getElementById("totalSale").innerText = sale;
+  document.getElementById("totalSale").innerText =
+    requests.filter(r => r.sale === "Yes").length;
 }
 
-function exportCSV(){
+function exportCSV() {
+  let csv = "Artist,Title,Medium,Category,Sale,Price\n";
 
-  let csv = "Artist,Title,Description,For Sale,Price\n";
-
-  artistsData.forEach(a => {
-    a.works.forEach(w => {
-      csv += `${a.name},${w.title},${w.desc},${w.sale},${w.price || ""}\n`;
-    });
+  requests.forEach(r => {
+    csv += `${r.artist},${r.title},${r.medium},${r.category},${r.sale},${r.price}\n`;
   });
 
   const blob = new Blob([csv], { type: "text/csv" });
-  const url = URL.createObjectURL(blob);
-
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = "wiva_export.csv";
-  a.click();
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = "artworks.csv";
+  link.click();
 }
