@@ -10,7 +10,8 @@
 <body>
 
 <header>
-  <h1>Wiva - Art Exhibition</h1>
+  <h1>🎨 Wiva - Art Exhibition</h1>
+  <p>Manage artists and artworks easily</p>
 </header>
 
 <nav>
@@ -22,21 +23,51 @@
 <!-- FORM -->
 <section id="form" class="page">
 
+  <!-- ARTIST -->
   <div class="card">
     <h2 class="section-title">Artist Information</h2>
 
     <label>Artist Name</label>
-    <input id="artistName" placeholder="e.g. Pablo Picasso">
+    <input id="artistName">
+
+    <label>Address</label>
+    <input id="address">
+
+    <label>Email</label>
+    <input id="email" type="email">
+
+    <label>Phone Number</label>
+    <input id="phone">
+
+    <label>Portfolio Link</label>
+    <input id="portfolio">
   </div>
 
+  <!-- ARTWORK -->
   <div class="card">
     <h2 class="section-title">Artwork Details</h2>
 
     <label>Artwork Title</label>
-    <input id="title" placeholder="e.g. Blue Horizon">
+    <input id="title">
 
     <label>Description</label>
-    <input id="desc" placeholder="e.g. Abstract painting">
+    <input id="desc">
+
+    <label>Art Medium</label>
+    <input id="medium" placeholder="e.g. Oil, Acrylic, Digital">
+
+    <label>Additional Comments</label>
+    <input id="comments">
+
+    <label>Artwork Category</label>
+    <select id="category" onchange="toggleOtherCategory()">
+      <option>Paintings</option>
+      <option>Drawings</option>
+      <option>Mixed Media</option>
+      <option>Other</option>
+    </select>
+
+    <input id="otherCategory" placeholder="Specify category" class="hidden">
 
     <label>For Sale</label>
     <select id="sale" onchange="togglePrice()">
@@ -45,21 +76,20 @@
     </select>
 
     <label id="priceLabel">Price (£)</label>
-    <input id="price" type="number" placeholder="e.g. 800">
+    <input id="price" type="number">
 
-    <button class="btn add-btn" onclick="addArtwork()">
-      Add Artwork
-    </button>
+    <button class="btn add-btn" onclick="addArtwork()">Add Artwork</button>
   </div>
 
+  <!-- TEMP TABLE -->
   <div class="card">
     <h3>Artwork List</h3>
-
     <table class="table">
       <thead>
         <tr>
           <th>Title</th>
-          <th>Description</th>
+          <th>Medium</th>
+          <th>Category</th>
           <th>For Sale</th>
           <th>Price</th>
         </tr>
@@ -69,19 +99,15 @@
   </div>
 
   <div class="card">
-    <button class="btn save" onclick="saveArtist()">
-      Save & Finish
-    </button>
+    <button class="btn save" onclick="saveArtist()">Save & Finish</button>
   </div>
 
 </section>
 
 <!-- REQUESTS -->
 <section id="requests" class="page hidden">
-
   <div class="card">
     <h2>Requests</h2>
-
     <button class="btn" onclick="exportCSV()">Export CSV</button>
 
     <table class="table">
@@ -89,7 +115,8 @@
         <tr>
           <th>Artist</th>
           <th>Title</th>
-          <th>Description</th>
+          <th>Medium</th>
+          <th>Category</th>
           <th>For Sale</th>
           <th>Price</th>
         </tr>
@@ -97,14 +124,11 @@
       <tbody id="requestTable"></tbody>
     </table>
   </div>
-
 </section>
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="page hidden">
-
   <div class="grid">
-
     <div class="card stat">
       <h3>Artists</h3>
       <h2 id="totalArtists">0</h2>
@@ -119,9 +143,7 @@
       <h3>For Sale</h3>
       <h2 id="totalSale">0</h2>
     </div>
-
   </div>
-
 </section>
 
 <footer>
