@@ -1,70 +1,108 @@
 body {
-  font-family: Arial;
+  font-family: Arial, sans-serif;
   background: #f4f6fb;
   margin: 0;
+  color: #333;
 }
 
+/* HEADER */
 header {
-  background: #1e88e5;
+  background: linear-gradient(135deg, #1e88e5, #1565c0);
   color: white;
   text-align: center;
-  padding: 15px;
+  padding: 20px;
 }
 
+/* NAV */
 nav {
   display: flex;
   justify-content: center;
   gap: 10px;
-  background: #1565c0;
+  background: #0d47a1;
   padding: 10px;
 }
 
 nav button {
-  padding: 10px;
+  padding: 10px 15px;
   border: none;
   cursor: pointer;
   color: white;
   background: #1e88e5;
+  border-radius: 6px;
+  transition: 0.3s;
 }
 
+nav button:hover {
+  background: #42a5f5;
+}
+
+/* SECTIONS */
 .page {
   padding: 20px;
 }
 
-.hidden {
-  display: none;
-}
-
+/* CARDS */
 .card {
   background: white;
-  padding: 15px;
+  padding: 20px;
   margin-bottom: 15px;
-  border-radius: 8px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
 }
 
+/* INPUTS */
 input, select {
   width: 100%;
-  padding: 8px;
-  margin-bottom: 10px;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
 }
 
+/* BUTTONS */
 .btn {
-  padding: 10px;
+  padding: 10px 15px;
   background: #1e88e5;
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 6px;
+  transition: 0.3s;
 }
 
+.btn:hover {
+  background: #1565c0;
+}
+
+/* TABLE */
 .table {
   width: 100%;
+  border-collapse: collapse;
 }
 
+.table th, .table td {
+  border-bottom: 1px solid #eee;
+  padding: 8px;
+  text-align: left;
+}
+
+/* GRID DASHBOARD */
 .grid {
   display: flex;
-  gap: 10px;
+  gap: 15px;
+  flex-wrap: wrap;
 }
 
 .stat {
+  flex: 1;
   text-align: center;
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+}
+
+/* HIDDEN */
+.hidden {
+  display: none;
 }
