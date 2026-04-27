@@ -10,8 +10,7 @@
 <body>
 
 <header>
-  <h1>🎨 Wiva - Art Exhibition</h1>
-  <p>Manage artists and artworks easily</p>
+  <h1>Wiva - Art Exhibition</h1>
 </header>
 
 <nav>
@@ -24,50 +23,43 @@
 <section id="form" class="page">
 
   <!-- ARTIST -->
-  <div class="card">
+  <div class="card blue">
     <h2 class="section-title">Artist Information</h2>
 
     <label>Artist Name</label>
-    <input id="artistName">
+    <input id="artistName" placeholder="e.g. Pablo Picasso">
 
     <label>Address</label>
-    <input id="address">
+    <input id="artistAddress" placeholder="e.g. 123 London Street">
 
-    <label>Email</label>
-    <input id="email" type="email">
+    <!-- ROW EMAIL + MOBILE -->
+    <div class="row">
 
-    <label>Phone Number</label>
-    <input id="phone">
+      <div>
+        <label>Email</label>
+        <input id="artistEmail" type="email" placeholder="e.g. artist@email.com">
+      </div>
 
-    <label>Portfolio Link</label>
-    <input id="portfolio">
+      <div>
+        <label>Mobile Number</label>
+        <input id="artistMobile" placeholder="e.g. +44 7123 456789">
+      </div>
+
+    </div>
+
+    <label>Social Media</label>
+    <input id="artistSocial" placeholder="e.g. Instagram / Website">
   </div>
 
   <!-- ARTWORK -->
-  <div class="card">
+  <div class="card purple">
     <h2 class="section-title">Artwork Details</h2>
 
     <label>Artwork Title</label>
-    <input id="title">
+    <input id="title" placeholder="e.g. Blue Horizon">
 
     <label>Description</label>
-    <input id="desc">
-
-    <label>Art Medium</label>
-    <input id="medium" placeholder="e.g. Oil, Acrylic, Digital">
-
-    <label>Additional Comments</label>
-    <input id="comments">
-
-    <label>Artwork Category</label>
-    <select id="category" onchange="toggleOtherCategory()">
-      <option>Paintings</option>
-      <option>Drawings</option>
-      <option>Mixed Media</option>
-      <option>Other</option>
-    </select>
-
-    <input id="otherCategory" placeholder="Specify category" class="hidden">
+    <input id="desc" placeholder="e.g. Abstract painting">
 
     <label>For Sale</label>
     <select id="sale" onchange="togglePrice()">
@@ -76,20 +68,22 @@
     </select>
 
     <label id="priceLabel">Price (£)</label>
-    <input id="price" type="number">
+    <input id="price" type="number" placeholder="e.g. 800">
 
-    <button class="btn add-btn" onclick="addArtwork()">Add Artwork</button>
+    <button class="btn add-btn" onclick="addArtwork()">
+      Add Artwork
+    </button>
   </div>
 
-  <!-- TEMP TABLE -->
-  <div class="card">
+  <!-- LIST -->
+  <div class="card green">
     <h3>Artwork List</h3>
+
     <table class="table">
       <thead>
         <tr>
           <th>Title</th>
-          <th>Medium</th>
-          <th>Category</th>
+          <th>Description</th>
           <th>For Sale</th>
           <th>Price</th>
         </tr>
@@ -98,25 +92,31 @@
     </table>
   </div>
 
-  <div class="card">
-    <button class="btn save" onclick="saveArtist()">Save & Finish</button>
+  <!-- SAVE -->
+  <div class="card blue">
+    <button class="btn save" onclick="saveArtist()">
+      Save & Finish
+    </button>
   </div>
 
 </section>
 
 <!-- REQUESTS -->
 <section id="requests" class="page hidden">
-  <div class="card">
+
+  <div class="card blue">
     <h2>Requests</h2>
+
     <button class="btn" onclick="exportCSV()">Export CSV</button>
 
     <table class="table">
       <thead>
         <tr>
           <th>Artist</th>
+          <th>Email</th>
+          <th>Mobile</th>
           <th>Title</th>
-          <th>Medium</th>
-          <th>Category</th>
+          <th>Description</th>
           <th>For Sale</th>
           <th>Price</th>
         </tr>
@@ -124,26 +124,31 @@
       <tbody id="requestTable"></tbody>
     </table>
   </div>
+
 </section>
 
 <!-- DASHBOARD -->
 <section id="dashboard" class="page hidden">
+
   <div class="grid">
-    <div class="card stat">
+
+    <div class="card blue stat">
       <h3>Artists</h3>
       <h2 id="totalArtists">0</h2>
     </div>
 
-    <div class="card stat">
+    <div class="card purple stat">
       <h3>Artworks</h3>
       <h2 id="totalArtworks">0</h2>
     </div>
 
-    <div class="card stat">
+    <div class="card green stat">
       <h3>For Sale</h3>
       <h2 id="totalSale">0</h2>
     </div>
+
   </div>
+
 </section>
 
 <footer>
